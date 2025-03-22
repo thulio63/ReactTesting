@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useReducer } from "react";
 import "./App.css";
 import ironandink from "./images/ironandinkimg.jpg";
 
@@ -40,12 +40,15 @@ function Main({ parlor }) {
 }
 
 function App() {
-  const [status, setStatus] = useState(true);
+  const [status, toggle] = useReducer((status) => !status);
+
+  useEffect(() => {
+    console.log(`i feel ${status ? "good" : "bad"}`);
+  }, [status]);
+
   return (
     <div>
-      <button onClick={() => setStatus(!status)}>
-        victor nation... how we feeling?
-      </button>
+      <button onClick={toggle}>victor nation... how we feeling?</button>
       <h1>Andrew is currently feeling {status ? "good" : "bad"}!</h1>
       <Header feeling={status} />
       <Main year={new Date().getFullYear()} parlor={parlorMap} />
